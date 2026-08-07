@@ -41,13 +41,15 @@ jobs:
           EXPO_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.EXPO_PUBLIC_SUPABASE_ANON_KEY }}
 
       # GitHub Pages serves project repos from /<repo-name>/, but Expo's web
-      # export writes root-absolute asset paths (href="/...", src="/...") in
-      # index.html. Rewriting just those two attributes to relative paths is
-      # enough — everything else in the export already resolves relative to
-      # the page's own URL.
+      # export writes root-absolute paths in two places: index.html's own
+      # href/src attributes, and the httpServerLocation baked into the JS
+      # bundle for local font assets (@expo/vector-icons). Both need to
+      # become relative so they resolve under the Pages subpath instead of
+      # the domain root.
       - name: Rewrite root-absolute paths for the Pages subpath
         run: |
           sed -i 's|href="/favicon.ico"|href="./favicon.ico"|; s|src="/_expo|src="./_expo|' dist/index.html
+          sed -i 's|"/assets/|"./assets/|g' dist/_expo/static/js/web/*.js
 
       - uses: actions/upload-pages-artifact@v3
         with:
