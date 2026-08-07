@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "sk",
-    "slug": "sk",
+    "name": "Sidekiq",
+    "slug": "sidekiq",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,7 +18,18 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "backgroundColor": "#FCF7F1",
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Sidekiq uses your photo library so you can set a profile picture."
+        }
+      ],
+      "expo-font"
+    ]
   }
 }
